@@ -1,18 +1,18 @@
 {
-  "name": "electron-quick-start",
+  "name": "electron-todo-txt",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "private": true,
+  "description": "an electron implementation of todo.txt",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
     "Electron",
     "todo.txt"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Chinedu Eze",
+  "license": "Chinedu Eze",
   "devDependencies": {
     "electron": "^7.1.7"
   },

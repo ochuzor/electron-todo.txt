@@ -4,13 +4,8 @@ const _ = require('lodash')
 const FlexSearch = require('flexsearch')
 
 class TextIndexer {
-    constructor () {
-        this._indexer = new FlexSearch({
-            doc: {
-                id: 'id',
-                field: ['text']
-            }
-        })
+    constructor (opts) {
+        this._indexer = new FlexSearch(opts)
     }
 
     initWith (data) {
