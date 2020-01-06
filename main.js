@@ -1,3 +1,5 @@
+"use strict"
+
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
@@ -13,7 +15,8 @@ function createWindow () {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    frame: false
   })
 
   // and load the index.html of the app.
