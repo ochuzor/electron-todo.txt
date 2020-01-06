@@ -7,7 +7,7 @@
 
 'use strict'
 
-const { ipcRenderer } = require('electron')
+const { saveText } = require('./store')
 
 const mainForm = document.getElementById('input-bar-form')
 const input = document.getElementById('main-input')
@@ -17,8 +17,7 @@ mainForm.addEventListener('submit', handleText)
 function handleText(evt) {
     evt.preventDefault()
     const text = evt.target[0].value
-    ipcRenderer.send('add-text', {text})
-    setInputText('')
+    saveText(text).then(() => setInputText(''))
 }
 
 function setInputText (text = '') {
