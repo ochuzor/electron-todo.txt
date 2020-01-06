@@ -16,6 +16,12 @@ const indexOpts = {
 
 const indexer = new TextIndexer(indexOpts)
 
+;(async (file) => {
+    if (fs.existsSync(file)) {
+        await loadData(file)
+    }
+})(DATA_FILE)
+
 function textToData(text) {
     return {text}
 }
@@ -35,9 +41,19 @@ function saveTextToFile(text) {
     return new Promise((resolve) => {
         fs.writeFile(DATA_FILE, text, 'utf8', (err) => {
             if (err) throw err
-            resolve(data)
+            resolve(text)
         })
     })
 }
 
+function loadData(file) {
+    return new Promise((resolve) => {
+        const data = fs.readFileSync(file, 'utf8')
+        indexer.initWith(data)
+        resolve(data)
+    })
+}
+
 module.exports.saveText = saveText
+module.exports.search = indexer.search
+module.exports.getAll = indexer.getAll
