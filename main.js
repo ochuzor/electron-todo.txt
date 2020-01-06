@@ -4,7 +4,7 @@
 const {
   app, 
   BrowserWindow, 
-  ipcMain
+  globalShortcut
 } = require('electron')
 const path = require('path')
 
@@ -37,6 +37,18 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+    mainWindow.on('blur', () => {
+        mainWindow.hide()
+    })
+
+    globalShortcut.register('CommandOrControl+.', showMainWindow)
+    globalShortcut.register('esc', () => mainWindow.hide())
+}
+
+function showMainWindow() {
+    if(!mainWindow) createWindow()
+    mainWindow.show()
 }
 
 // This method will be called when Electron has finished
