@@ -4,3 +4,23 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+
+'use strict'
+
+const { ipcRenderer } = require('electron')
+
+const mainForm = document.getElementById('input-bar-form')
+const input = document.getElementById('main-input')
+
+mainForm.addEventListener('submit', handleText)
+
+function handleText(evt) {
+    evt.preventDefault()
+    const text = evt.target[0].value
+    ipcRenderer.send('add-text', {text})
+    setInputText('')
+}
+
+function setInputText (text = '') {
+    input.value = text
+}

@@ -1,1 +1,7 @@
-- setup initial main window UI
+[x] set up initial main window UI
+[x] set up saving items onEnter
+[ ] save data to file
+[ ] close main window onBlur
+[ ] show list of added items
+[ ] show item details
+[ ] add ability to edit items
