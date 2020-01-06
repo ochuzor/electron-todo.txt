@@ -21,7 +21,8 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
     },
-    frame: false
+    frame: false,
+    show: false
   })
 
   // and load the index.html of the app.

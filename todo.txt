@@ -1,8 +1,9 @@
+[ ] show list of added items
+[ ] show item details
+[ ] add ability to edit items
 [x] set up initial main window UI
 [x] set up saving items onEnter
 [x] save data to file
 [x] close main window onBlur
 [x] show main window with keyboard shortcut
-[ ] show list of added items
-[ ] show item details
-[ ] add ability to edit items
+[x] main window hidden by default
