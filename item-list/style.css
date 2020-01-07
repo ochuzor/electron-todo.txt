@@ -2,6 +2,8 @@
     width: 100%;
     padding: 8px;
     font-size: 22px;
+    position: fixed;
+    top: 0px;
 }
 
 .lst-itm {
@@ -12,5 +14,4 @@
 .lst-itm:hover {
     color: #ffffff;
     background-color: burlywood;
-    font-weight: bold;
 }
