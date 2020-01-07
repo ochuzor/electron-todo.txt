@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+      <meta charset="UTF-8">
+      <title>electron todo.txt - Item List</title>
+      <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+      <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+      <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+
+      <link rel="stylesheet" type="text/css" href="../minireset.min.css">
+      <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+      <div id="main-cntr">
+          <form class="search-bar">
+              <input type="text">
+          </form>
+          <ul id="item-list"></ul>
+      </div>
+
+      <script src="./script.js"></script>
+  </body>
+
+</html>

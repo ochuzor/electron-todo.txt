@@ -7,6 +7,7 @@
 
 'use strict'
 
+const { ipcRenderer } = require('electron')
 const { saveText } = require('./store')
 
 const mainForm = document.getElementById('input-bar-form')
@@ -16,8 +17,15 @@ mainForm.addEventListener('submit', handleText)
 
 function handleText(evt) {
     evt.preventDefault()
-    const text = evt.target[0].value
-    saveText(text).then(() => setInputText(''))
+    const text = evt.target[0].value.trim()
+
+    if (['ls', 'list'].includes(text.toLowerCase())) {
+        ipcRenderer.send('show-items-list')
+    } else {
+        saveText(text)
+    }
+
+    setInputText('')
 }
 
 function setInputText (text = '') {

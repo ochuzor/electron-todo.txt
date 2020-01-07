@@ -3,6 +3,8 @@
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
+const shortid = require('shortid')
+
 const { TextIndexer } = require('./text-indexer')
 
 const DATA_FOLDER = path.join(__dirname, '../data')
@@ -29,7 +31,7 @@ function textToData(text) {
 function saveText(data) {
     return new Promise((resolve) => {
         const _data = _.isString(data) ? textToData(data) : _.cloneDeep(data)
-        if (!_data.id) _data.id = parseInt(_.uniqueId(), 10)
+        if (!_data.id) _data.id = shortid.generate()
         
         indexer.addToIndex(_data)
         saveTextToFile(indexer.toString())
@@ -55,5 +57,5 @@ function loadData(file) {
 }
 
 module.exports.saveText = saveText
-module.exports.search = indexer.search
-module.exports.getAll = indexer.getAll
+module.exports.search = indexer.search.bind(indexer)
+module.exports.getAll = indexer.getAll.bind(indexer)
