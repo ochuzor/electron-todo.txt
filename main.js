@@ -48,7 +48,6 @@ function createWindow () {
     })
 
     globalShortcut.register('CommandOrControl+.', showMainWindow)
-    globalShortcut.register('esc', () => mainWindow.hide())
 }
 
 function showMainWindow() {

@@ -7,11 +7,14 @@
 
 'use strict'
 
-const { ipcRenderer } = require('electron')
+const { ipcRenderer, remote } = require('electron')
+const $ = require('jquery')
+
 const { saveText } = require('./store')
 
 const mainForm = document.getElementById('input-bar-form')
 const input = document.getElementById('main-input')
+const ESC_CODE = 27
 
 mainForm.addEventListener('submit', handleText)
 
@@ -31,3 +34,9 @@ function handleText(evt) {
 function setInputText (text = '') {
     input.value = text
 }
+
+$(document).keyup((e) => {
+    if (e.which === ESC_CODE) {
+        remote.getCurrentWindow().hide()
+    }
+})

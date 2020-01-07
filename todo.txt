@@ -1,5 +1,6 @@
 [ ] show item details
 [ ] add ability to edit items
+[x] fix 'esc' bug
 [x] show list of added items
 [x] set up initial main window UI
 [x] set up saving items onEnter
