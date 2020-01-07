@@ -3,3 +3,14 @@
     padding: 8px;
     font-size: 22px;
 }
+
+.lst-itm {
+    font-size: 20pt;
+    padding: 8px;
+}
+
+.lst-itm:hover {
+    color: #ffffff;
+    background-color: burlywood;
+    font-weight: bold;
+}

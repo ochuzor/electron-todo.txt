@@ -9,11 +9,13 @@ const list = $('#item-list')
 
 const allItems = getAll()
 
+const getListItem = (itm) => {
+    return $("<li></li>").text(itm.text).addClass('lst-itm')
+}
+
 function displayElemets(ls) {
     list.html('')
-    ls.forEach(itm => {
-        list.append($("<li></li>").text(itm.text))
-    })
+    ls.forEach(itm => list.append(getListItem(itm)))
 }
 
 displayElemets(allItems)

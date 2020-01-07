@@ -1,6 +1,6 @@
-[ ] show list of added items
 [ ] show item details
 [ ] add ability to edit items
+[x] show list of added items
 [x] set up initial main window UI
 [x] set up saving items onEnter
 [x] save data to file
