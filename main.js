@@ -53,6 +53,7 @@ function createWindow () {
 function showMainWindow() {
     if(!mainWindow) createWindow()
     mainWindow.show()
+    if (itemListWindow) itemListWindow.close()
 }
 
 // This method will be called when Electron has finished
