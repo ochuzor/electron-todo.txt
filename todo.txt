@@ -1,5 +1,6 @@
 [ ] show item details
 [ ] add ability to edit items
+[x] fix the omitted search result list bug
 [x] close item list when main window is shown
 [x] implement a search function
 [x] on the list of items page, pin search bar to top
