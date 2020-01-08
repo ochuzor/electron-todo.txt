@@ -1,5 +1,6 @@
 'use strict'
 
+const { remote } = require('electron')
 const $ = require('jquery')
 const Mousetrap = require('mousetrap')
 // const _ = require('lodash')
@@ -43,8 +44,10 @@ function displayElemets(ls) {
     ls.forEach(itm => list.append(getListItem(itm)))
 }
 
-displayElemets(allItems)
+function closeWindow() {
+    remote.getCurrentWindow().close()
+}
 
-Mousetrap.bind('esc', function() { 
-    console.log('escape')
-}, 'keyup')
+Mousetrap.bind('esc', closeWindow, 'keyup')
+
+displayElemets(allItems)
