@@ -7,11 +7,17 @@ const Mousetrap = require('mousetrap')
 
 const {
     getAll,
-    search
+    search,
+    getItem
 } = require('../store')
 
 const list = $('#item-list')
 const searchInput = $('#search-input')
+const itemListCntr = $('#main-cntr > div:first');
+const itemDetailCntr = $('#main-cntr > div:nth-child(2)');
+
+const pageData = Object.create(null);
+pageData.selectedItem = null;
 
 // const onInputHandler = _.debounce(inputChangeHandler, 250, { 'maxWait': 1000 })
 const allItems = getAll()
@@ -28,15 +34,23 @@ function inputChangeHandler(e) {
 
 searchInput.on('input', inputChangeHandler)
 
+function showItem(item) {
+    pageData.selectedItem = item;
+    updateDisplay();
+}
+
+function handleItemClick() {
+    const itmId = $(this).attr('data-id');
+    showItem(getItem(itmId));
+    // console.log(itm.text(), itm.attr('data-id'))
+}
+
 const getListItem = (itm) => {
     return $("<li></li>")
         .text(itm.text)
         .addClass('lst-itm')
         .attr('data-id', itm.id)
-        .click(function() {
-            const itm = $(this)
-            console.log(itm.text(), itm.attr('data-id'))
-          })
+        .click(handleItemClick);
 }
 
 function displayElemets(ls) {
@@ -48,6 +62,27 @@ function closeWindow() {
     remote.getCurrentWindow().close()
 }
 
-Mousetrap.bind('esc', closeWindow, 'keyup')
+function closeItemDetail() {
+    pageData.selectedItem = null;
+    updateDisplay();
+}
+
+function updateDisplay() {
+    if (pageData.selectedItem) {
+        itemDetailCntr.html(JSON.stringify(pageData.selectedItem, null, '\t'));
+        itemDetailCntr.show();
+        itemListCntr.hide();
+    } else {
+        itemDetailCntr.hide();
+        itemListCntr.show();
+    }
+}
+
+Mousetrap.bind('esc', () => {
+    if (pageData.selectedItem) {
+        closeItemDetail();
+    }
+    else closeWindow();
+}, 'keyup')
 
 displayElemets(allItems)
