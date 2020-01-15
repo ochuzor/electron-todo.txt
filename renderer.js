@@ -24,7 +24,7 @@ function handleText(evt) {
 
     if (['ls', 'list'].includes(text.toLowerCase())) {
         ipcRenderer.send('show-items-list')
-    } else {
+    } else if (text) {
         saveText(text)
     }
 

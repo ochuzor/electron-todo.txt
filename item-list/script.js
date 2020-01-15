@@ -1,20 +1,23 @@
 'use strict'
 
-const { remote } = require('electron')
-const $ = require('jquery')
-const Mousetrap = require('mousetrap')
-// const _ = require('lodash')
+const { remote } = require('electron');
+const $ = require('jquery');
+const Mousetrap = require('mousetrap');
+const _ = require('lodash');
 
 const {
     getAll,
     search,
     getItem
-} = require('../store')
+} = require('../store');
+const {parseTodoStr} = require('../todo.parser');
 
 const list = $('#item-list')
 const searchInput = $('#search-input')
 const itemListCntr = $('#main-cntr > div:first');
 const itemDetailCntr = $('#main-cntr > div:nth-child(2)');
+const detailsText = $('#main-cntr > div:nth-child(2) > textarea');
+const detailsList = $('#main-cntr > div:nth-child(2) > ul');
 
 const pageData = Object.create(null);
 pageData.selectedItem = null;
@@ -67,9 +70,28 @@ function closeItemDetail() {
     updateDisplay();
 }
 
+function onItemTextChange(e) {
+    const data = parseTodoStr($(this).val());
+    renderDetailsList(data);
+}
+
+const getItemDetailField = (val, idx) => {
+    const title = $('<span>').html(`${_.startCase(idx)}: `);
+    const valTxt = $('<span class="item-info">').html(`${val}`);
+    return $('<li>').append(title).append(valTxt);
+};
+
+function renderDetailsList(itemData) {
+    const childs = _.map(_.omit(itemData, ['text']), getItemDetailField);
+    return detailsList.html(childs);
+};
+
 function updateDisplay() {
     if (pageData.selectedItem) {
-        itemDetailCntr.html(JSON.stringify(pageData.selectedItem, null, '\t'));
+        const text = pageData.selectedItem.text;
+        detailsText.val(text);
+        renderDetailsList(parseTodoStr(text));
+
         itemDetailCntr.show();
         itemListCntr.hide();
     } else {
@@ -83,6 +105,17 @@ Mousetrap.bind('esc', () => {
         closeItemDetail();
     }
     else closeWindow();
-}, 'keyup')
+}, 'keyup');
 
-displayElemets(allItems)
+/*
+function onKeyDown() {
+    console.log('arrow down');
+}
+
+Mousetrap.bind('down', _.debounce(onKeyDown, 250, { 'maxWait': 1000 }));
+// */
+
+(() => {
+    detailsText.on('input', _.debounce(onItemTextChange, 250, { 'maxWait': 1000 }));
+    displayElemets(allItems);
+})();

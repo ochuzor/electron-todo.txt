@@ -86,6 +86,9 @@ ipcMain.on('show-items-list', (event) => {
             parent: mainWindow
         })
 
+        itemListWindow.setMenu(null)
+        itemListWindow.webContents.openDevTools()
+
         itemListWindow.on('closed', () => {
             itemListWindow = null
         })

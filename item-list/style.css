@@ -25,3 +25,17 @@
     -webkit-box-shadow: 3px 3px 5px 6px #ccc;
     box-shadow:         3px 3px 5px 6px #ccc;
 }
+
+.item-info {
+    font-size: 22px;
+}
+
+.itm-dtl-txt {
+    width: 100%;
+    min-height: 120px;
+    font-size: 20pt;
+}
+
+.margin-top-10 {
+    margin-top: 20px;
+}
