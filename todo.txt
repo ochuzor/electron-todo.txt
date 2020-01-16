@@ -1,7 +1,9 @@
-[ ] implement showing data details as you type / info display
 [ ] implement error message display
-[ ] show item details
-[ ] add ability to edit items
+[ ] implement ability to delete items
+[ ] implement ability to save changes (after editing)
+[x] implement showing data details as you type / info display
+[x] show item details
+[x] add ability to edit items
 [x] esc key closes the list page
 [x] fix the omitted search result list bug
 [x] close item list when main window is shown

@@ -39,3 +39,11 @@
 .margin-top-10 {
     margin-top: 20px;
 }
+
+.padding-10 {
+    padding: 10px;
+}
+
+.dtl-lst-itm {
+    border-bottom: 2px solid burlywood;
+}

@@ -77,11 +77,15 @@ function onItemTextChange(e) {
 const getItemDetailField = (val, idx) => {
     const title = $('<span>').html(`${_.startCase(idx)}: `);
     const valTxt = $('<span class="item-info">').html(`${val}`);
-    return $('<li>').append(title).append(valTxt);
+    return $('<li class="padding-10 dtl-lst-itm">').append(title).append(valTxt);
 };
 
 function renderDetailsList(itemData) {
-    const childs = _.map(_.omit(itemData, ['text']), getItemDetailField);
+    const childs = _.reduce(_.omit(itemData, ['text']), (acc, val, key) => {
+        if (val) acc.push(getItemDetailField(val, key));
+        return acc;
+    }, []);
+
     return detailsList.html(childs);
 };
 
