@@ -21,9 +21,7 @@ const detailsList = $('#main-cntr > div:nth-child(2) > ul');
 
 const pageData = Object.create(null);
 pageData.selectedItem = null;
-
-// const onInputHandler = _.debounce(inputChangeHandler, 250, { 'maxWait': 1000 })
-const allItems = getAll()
+pageData.allItems = getAll();
 
 function inputChangeHandler(e) {
     const term = searchInput.val()
@@ -31,7 +29,7 @@ function inputChangeHandler(e) {
         const items = search(term) || []
         displayElemets(items)
     } else {
-        displayElemets(allItems)
+        displayElemets(pageData.allItems)
     }
 }
 
@@ -74,15 +72,21 @@ function onItemTextChange(e) {
     renderDetailsList(data);
 }
 
+function getItemDetailString(key, val) {
+    if (key === 'tags' || _.isArray(val)) return JSON.stringify(val);
+
+    return val.toString();
+}
+
 const getItemDetailField = (val, idx) => {
     const title = $('<span>').html(`${_.startCase(idx)}: `);
-    const valTxt = $('<span class="item-info">').html(`${val}`);
+    const valTxt = $('<span class="item-info">').html(getItemDetailString(idx, val));
     return $('<li class="padding-10 dtl-lst-itm">').append(title).append(valTxt);
 };
 
 function renderDetailsList(itemData) {
     const childs = _.reduce(_.omit(itemData, ['text']), (acc, val, key) => {
-        if (val) acc.push(getItemDetailField(val, key));
+        if (!_.isEmpty(val)) acc.push(getItemDetailField(val, key));
         return acc;
     }, []);
 
@@ -103,6 +107,14 @@ function updateDisplay() {
     }
 }
 
+function saveEdit() {
+    if (pageData.selectedItem) {
+        console.log('saving:', pageData.selectedItem.id)
+    }
+}
+
+Mousetrap.bind('ctrl+s', saveEdit, 'keyup');
+
 Mousetrap.bind('esc', () => {
     if (pageData.selectedItem) {
         closeItemDetail();
@@ -110,16 +122,8 @@ Mousetrap.bind('esc', () => {
     else closeWindow();
 }, 'keyup');
 
-/*
-function onKeyDown() {
-    console.log('arrow down');
-}
-
-Mousetrap.bind('down', _.debounce(onKeyDown, 250, { 'maxWait': 1000 }));
-// */
-
 (() => {
     detailsText.on('input', _.debounce(onItemTextChange, 250, { 'maxWait': 1000 }));
     itemDetailCntr.hide();
-    displayElemets(allItems);
+    displayElemets(pageData.allItems);
 })();
