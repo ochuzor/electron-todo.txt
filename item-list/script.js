@@ -45,7 +45,6 @@ function showItem(item) {
 function handleItemClick() {
     const itmId = $(this).attr('data-id');
     showItem(getItem(itmId));
-    // console.log(itm.text(), itm.attr('data-id'))
 }
 
 const getListItem = (itm) => {
@@ -117,5 +116,6 @@ Mousetrap.bind('down', _.debounce(onKeyDown, 250, { 'maxWait': 1000 }));
 
 (() => {
     detailsText.on('input', _.debounce(onItemTextChange, 250, { 'maxWait': 1000 }));
+    itemDetailCntr.hide();
     displayElemets(allItems);
 })();
