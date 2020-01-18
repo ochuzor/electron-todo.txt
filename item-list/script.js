@@ -21,7 +21,12 @@ const itemListCntr = $('#main-cntr > div:first');
 const itemDetailCntr = $('#main-cntr > div:nth-child(2)');
 const detailsText = $('#main-cntr > div:nth-child(2) > textarea');
 const detailsList = $('#main-cntr > div:nth-child(2) > ul');
+
 const DEFAULT_MESSAGE_DISPLAY_TIME = 5000; // 5 seconds
+const JQ_ARROW_DOWN_KEY = 40;
+const JQ_ARROW_UP_KEY = 38;
+const JQ_ENTER_KEY = 13;
+let selectionIndex = 0;
 
 const pageData = Object.create(null);
 pageData.selectedItem = null;
@@ -36,8 +41,6 @@ function inputChangeHandler(e) {
         displayElemets(pageData.allItems)
     }
 }
-
-searchInput.on('input', inputChangeHandler)
 
 function showItem(item) {
     pageData.selectedItem = item;
@@ -104,6 +107,7 @@ function updateDisplay() {
 
         itemDetailCntr.show();
         itemListCntr.hide();
+        detailsText.focus();
     } else {
         itemDetailCntr.hide();
         itemListCntr.show();
@@ -130,6 +134,7 @@ function reloadAll() {
         searchInput.val('');
         pageData.allItems = _.reverse(getAll());
         displayElemets(pageData.allItems);
+        searchInput.focus();
     }, 300);
 }
 
@@ -157,8 +162,34 @@ Mousetrap.bind('ctrl+del', () => {
     }
 }, 'keyup');
 
+function handleArrowKey(key) {
+    const ls = list.children('li');
+    let val = selectionIndex;
+    if (key === JQ_ARROW_DOWN_KEY) {
+        val += 1;
+    }
+    else if (key === JQ_ARROW_UP_KEY) {
+        val -= 1;
+    }
+    else if (key === JQ_ENTER_KEY) {
+        list.children(`li:eq(${selectionIndex})`).click();
+    }
+
+    selectionIndex = _.clamp(val || 0, 0, ls.length - 1);
+
+    ls.removeClass('lst-itm-highlight')
+        .addClass(function(index) {
+            if (index === selectionIndex) return 'lst-itm-highlight';
+            return '';
+        });
+}
+
 (() => {
+    searchInput.on('input', inputChangeHandler);
     detailsText.on('input', _.debounce(onItemTextChange, 250, { 'maxWait': 1000 }));
     itemDetailCntr.hide();
+    itemListCntr.keyup(function(event) {
+        handleArrowKey(event.which);
+    });
     reloadAll();
 })();

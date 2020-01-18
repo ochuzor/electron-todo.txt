@@ -16,6 +16,11 @@
     background-color: burlywood;
 }
 
+.lst-itm-highlight {
+    color: #ffffff;
+    background-color: burlywood;
+}
+
 #item-list {
     margin-top: 40px;
 }
