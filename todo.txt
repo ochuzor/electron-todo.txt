@@ -1,4 +1,4 @@
-[ ] docs should be arranged in order of modification by default
+[x] docs should be arranged in order of creation by default
 [x] implement ability to delete items
 [x] implement error message display
 [x] implement ability to save changes (after editing)

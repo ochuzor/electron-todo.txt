@@ -47,3 +47,21 @@
 .dtl-lst-itm {
     border-bottom: 2px solid burlywood;
 }
+
+#msg-cntr {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    font-size: 18pt;
+    text-align: center;
+}
+
+#msg-cntr > div.msg-text {
+    padding: 8px;
+    background-color: #B7B83F;
+    color: beige;
+}
+
+#msg-cntr div.msg-cfm {
+    font-size: 22pt;
+}

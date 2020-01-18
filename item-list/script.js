@@ -128,7 +128,7 @@ function saveEdit() {
 function reloadAll() {
     setTimeout(() => {
         searchInput.val('');
-        pageData.allItems = getAll();
+        pageData.allItems = _.reverse(getAll());
         displayElemets(pageData.allItems);
     }, 300);
 }
@@ -160,5 +160,5 @@ Mousetrap.bind('ctrl+del', () => {
 (() => {
     detailsText.on('input', _.debounce(onItemTextChange, 250, { 'maxWait': 1000 }));
     itemDetailCntr.hide();
-    displayElemets(pageData.allItems);
+    reloadAll();
 })();
