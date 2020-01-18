@@ -1,3 +1,4 @@
+[x] there is a bug where data is not saved after delete
 [x] docs should be arranged in order of creation by default
 [x] implement ability to delete items
 [x] implement error message display

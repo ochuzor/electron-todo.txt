@@ -39,6 +39,14 @@ function saveText(data) {
     })
 }
 
+function deleteDoc(id) {
+    return new Promise(resolve => {
+        indexer.removeFromIndex(id)
+        saveTextToFile(indexer.toString())
+        resolve(id);
+    })
+}
+
 function saveTextToFile(text) {
     return new Promise((resolve) => {
         fs.writeFile(DATA_FILE, text, 'utf8', (err) => {
@@ -60,4 +68,4 @@ module.exports.saveText = saveText
 module.exports.search = indexer.search.bind(indexer)
 module.exports.getAll = indexer.getAll.bind(indexer)
 module.exports.getItem = indexer.getDocument.bind(indexer)
-module.exports.deleteDoc = indexer.removeFromIndex.bind(indexer)
+module.exports.deleteDoc = deleteDoc
