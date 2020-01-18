@@ -1,4 +1,5 @@
-[ ] implement ability to delete items
+[ ] docs should be arranged in order of modification by default
+[x] implement ability to delete items
 [x] implement error message display
 [x] implement ability to save changes (after editing)
 [x] implement showing data details as you type / info display

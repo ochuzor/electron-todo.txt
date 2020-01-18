@@ -9,7 +9,8 @@ const {
     getAll,
     search,
     getItem,
-    saveText
+    saveText,
+    deleteDoc
 } = require('../store');
 const { parseTodoStr } = require('../todo.parser');
 const messageContainer = require('./message-box');
@@ -146,6 +147,7 @@ Mousetrap.bind('esc', () => {
 
 Mousetrap.bind('ctrl+del', () => {
     if (pageData.selectedItem) {
+        deleteDoc(pageData.selectedItem.id);
         messageContainer.hide();
         messageContainer.displayConfirm('Delete item?', () => {
             console.log('item deleted!');

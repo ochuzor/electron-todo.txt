@@ -60,3 +60,4 @@ module.exports.saveText = saveText
 module.exports.search = indexer.search.bind(indexer)
 module.exports.getAll = indexer.getAll.bind(indexer)
 module.exports.getItem = indexer.getDocument.bind(indexer)
+module.exports.deleteDoc = indexer.removeFromIndex.bind(indexer)
