@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const { remote } = require('electron');
 const $ = require('jquery');
@@ -8,12 +8,14 @@ const _ = require('lodash');
 const {
     getAll,
     search,
-    getItem
+    getItem,
+    saveText
 } = require('../store');
-const {parseTodoStr} = require('../todo.parser');
+const { parseTodoStr } = require('../todo.parser');
+const messageContainer = require('./message-box');
 
 const list = $('#item-list')
-const searchInput = $('#search-input')
+const searchInput = $('#search-input');
 const itemListCntr = $('#main-cntr > div:first');
 const itemDetailCntr = $('#main-cntr > div:nth-child(2)');
 const detailsText = $('#main-cntr > div:nth-child(2) > textarea');
@@ -54,8 +56,7 @@ const getListItem = (itm) => {
 }
 
 function displayElemets(ls) {
-    list.html('')
-    ls.forEach(itm => list.append(getListItem(itm)))
+    list.html(_.map(ls, getListItem));
 }
 
 function closeWindow() {
@@ -109,7 +110,13 @@ function updateDisplay() {
 
 function saveEdit() {
     if (pageData.selectedItem) {
-        console.log('saving:', pageData.selectedItem.id)
+        const data = {
+            id: pageData.selectedItem.id, 
+            text: detailsText.val()
+        };
+        saveText(data)
+            .then(() => messageContainer.displayMessage('item saved', 5000))
+            .catch(err => messageContainer.displayMessage('Error saving item', err.message));
     }
 }
 
@@ -118,6 +125,9 @@ Mousetrap.bind('ctrl+s', saveEdit, 'keyup');
 Mousetrap.bind('esc', () => {
     if (pageData.selectedItem) {
         closeItemDetail();
+    }
+    else if (messageContainer.isShowingConfirm()) {
+        messageContainer.closeConfirm();
     }
     else closeWindow();
 }, 'keyup');

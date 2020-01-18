@@ -1,6 +1,6 @@
-[ ] implement error message display
 [ ] implement ability to delete items
-[ ] implement ability to save changes (after editing)
+[x] implement error message display
+[x] implement ability to save changes (after editing)
 [x] implement showing data details as you type / info display
 [x] show item details
 [x] add ability to edit items
