@@ -20,6 +20,7 @@ const itemListCntr = $('#main-cntr > div:first');
 const itemDetailCntr = $('#main-cntr > div:nth-child(2)');
 const detailsText = $('#main-cntr > div:nth-child(2) > textarea');
 const detailsList = $('#main-cntr > div:nth-child(2) > ul');
+const DEFAULT_MESSAGE_DISPLAY_TIME = 5000; // 5 seconds
 
 const pageData = Object.create(null);
 pageData.selectedItem = null;
@@ -115,7 +116,7 @@ function saveEdit() {
             text: detailsText.val()
         };
         saveText(data)
-            .then(() => messageContainer.displayMessage('item saved', 5000))
+            .then(() => messageContainer.displayMessage('item saved', DEFAULT_MESSAGE_DISPLAY_TIME))
             .catch(err => messageContainer.displayMessage('Error saving item', err.message));
     }
 }
@@ -125,9 +126,13 @@ Mousetrap.bind('ctrl+s', saveEdit, 'keyup');
 Mousetrap.bind('esc', () => {
     if (pageData.selectedItem) {
         closeItemDetail();
+        setTimeout(() => {
+            pageData.allItems = getAll();
+            displayElemets(pageData.allItems);
+        }, 300);
     }
-    else if (messageContainer.isShowingConfirm()) {
-        messageContainer.closeConfirm();
+    else if (messageContainer.isShowing()) {
+        messageContainer.hide();
     }
     else closeWindow();
 }, 'keyup');
