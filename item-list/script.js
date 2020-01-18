@@ -109,32 +109,50 @@ function updateDisplay() {
     }
 }
 
+const textToData = (text) => {
+    return { text };
+}
+
 function saveEdit() {
     if (pageData.selectedItem) {
-        const data = {
-            id: pageData.selectedItem.id, 
-            text: detailsText.val()
-        };
+        const data = textToData(detailsText.val());
+        data.id = pageData.selectedItem.id;
+
         saveText(data)
             .then(() => messageContainer.displayMessage('item saved', DEFAULT_MESSAGE_DISPLAY_TIME))
             .catch(err => messageContainer.displayMessage('Error saving item', err.message));
     }
 }
 
+function reloadAll() {
+    setTimeout(() => {
+        searchInput.val('');
+        pageData.allItems = getAll();
+        displayElemets(pageData.allItems);
+    }, 300);
+}
+
 Mousetrap.bind('ctrl+s', saveEdit, 'keyup');
 
 Mousetrap.bind('esc', () => {
-    if (pageData.selectedItem) {
-        closeItemDetail();
-        setTimeout(() => {
-            pageData.allItems = getAll();
-            displayElemets(pageData.allItems);
-        }, 300);
-    }
-    else if (messageContainer.isShowing()) {
+    if (messageContainer.isShowing()) {
         messageContainer.hide();
+    } else if (pageData.selectedItem) {
+        closeItemDetail();
+        reloadAll();
     }
     else closeWindow();
+}, 'keyup');
+
+Mousetrap.bind('ctrl+del', () => {
+    if (pageData.selectedItem) {
+        messageContainer.hide();
+        messageContainer.displayConfirm('Delete item?', () => {
+            console.log('item deleted!');
+            reloadAll();
+            closeItemDetail();
+        });
+    }
 }, 'keyup');
 
 (() => {
