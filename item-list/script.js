@@ -184,6 +184,10 @@ function handleArrowKey(key) {
             if (index === selectionIndex) return 'lst-itm-highlight';
             return '';
         });
+    const selectedElement = document.getElementsByClassName('lst-itm-highlight').item(0);
+    if (selectedElement) {
+        selectedElement.scrollIntoView(false);
+    }
 }
 
 (() => {

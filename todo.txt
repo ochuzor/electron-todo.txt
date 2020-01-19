@@ -1,3 +1,4 @@
+[x] scroll to element on list with keyboard arrow keys
 [x] implement navigating doc list with keyboard
 [x] there is a bug where data is not saved after delete
 [x] docs should be arranged in order of creation by default
