@@ -26,7 +26,7 @@ const DEFAULT_MESSAGE_DISPLAY_TIME = 5000; // 5 seconds
 const JQ_ARROW_DOWN_KEY = 40;
 const JQ_ARROW_UP_KEY = 38;
 const JQ_ENTER_KEY = 13;
-let selectionIndex = 0;
+let selectionIndex = -1;
 
 const pageData = Object.create(null);
 pageData.selectedItem = null;
@@ -163,6 +163,11 @@ Mousetrap.bind('ctrl+del', () => {
 }, 'keyup');
 
 function handleArrowKey(key) {
+    if (key === JQ_ENTER_KEY) {
+        list.children(`li:eq(${selectionIndex})`).click();
+        return;
+    }
+
     const ls = list.children('li');
     let val = selectionIndex;
     if (key === JQ_ARROW_DOWN_KEY) {
@@ -170,9 +175,6 @@ function handleArrowKey(key) {
     }
     else if (key === JQ_ARROW_UP_KEY) {
         val -= 1;
-    }
-    else if (key === JQ_ENTER_KEY) {
-        list.children(`li:eq(${selectionIndex})`).click();
     }
 
     selectionIndex = _.clamp(val || 0, 0, ls.length - 1);
