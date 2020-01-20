@@ -43,7 +43,7 @@ function deleteDoc(id) {
     return new Promise(resolve => {
         indexer.removeFromIndex(id)
         saveTextToFile(indexer.toString())
-        resolve(id);
+        resolve(id)
     })
 }
 

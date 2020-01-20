@@ -1,0 +1,5 @@
+module.exports.STORE_SAVE_TEXT = 'SAVE_TEXT';
+module.exports.STORE_DELETE_DOC = 'STORE_DELETE_DOC';
+module.exports.STORE_GET_ALL_DOCS = 'STORE_GET_ALL_DOCS'
+module.exports.STORE_SEARCH_DOCS = 'STORE_SEARCH_DOCS';
+module.exports.STORE_GET_DOC = 'STORE_GET_DOC';

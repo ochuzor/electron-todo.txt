@@ -1,3 +1,5 @@
+'use strict'
+
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // No Node.js APIs are available in this process because
@@ -5,12 +7,12 @@
 // selectively enable features needed in the rendering
 // process.
 
-'use strict'
-
 const { ipcRenderer, remote } = require('electron')
 const $ = require('jquery')
 
-const { saveText } = require('./store')
+const {
+    saveText
+} = require('./store/store.ipc')
 
 const mainForm = document.getElementById('input-bar-form')
 const input = document.getElementById('main-input')

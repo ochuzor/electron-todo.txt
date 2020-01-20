@@ -11,7 +11,7 @@ const {
     getItem,
     saveText,
     deleteDoc
-} = require('../store');
+} = require('../store/store.ipc');
 const { parseTodoStr } = require('../todo.parser');
 const messageContainer = require('./message-box');
 

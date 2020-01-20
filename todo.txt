@@ -1,3 +1,8 @@
+[x] fix the bug of inconsistencies with saving data using the main window and using the lists window
+    - this is most likely cos data is held in memory and saved back to file system onSave
+    so both the main and other window each over write the data on file with what they have in memory
+    - use electronjs messaging for data access; so only the main window has the data that the program
+    works with. hence there will be no inconsistencies or over writing between the main and other windows
 [x] scroll to element on list with keyboard arrow keys
 [x] implement navigating doc list with keyboard
 [x] there is a bug where data is not saved after delete

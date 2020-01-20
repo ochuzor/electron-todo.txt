@@ -11,6 +11,22 @@ const path = require('path')
 
 const Window = require('./Window')
 
+const {
+    STORE_SAVE_TEXT,
+    STORE_DELETE_DOC,
+    STORE_GET_ALL_DOCS,
+    STORE_SEARCH_DOCS,
+    STORE_GET_DOC
+} = require('./store/store.constants')
+
+const {
+    saveText,
+    deleteDoc,
+    getAll,
+    search,
+    getItem
+} = require('./store/index')
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow,
@@ -93,4 +109,30 @@ ipcMain.on('show-items-list', (event) => {
             itemListWindow = null
         })
     }
+})
+
+ipcMain.on(STORE_SAVE_TEXT, (event, textData) => {
+    saveText(textData)
+        .then(respData => {
+            event.returnValue = respData
+        })
+})
+
+ipcMain.on(STORE_DELETE_DOC, (event, id) => {
+    deleteDoc(id)
+        .then(respData => {
+            event.returnValue = respData
+        })
+})
+
+ipcMain.on(STORE_GET_ALL_DOCS, (event) => {
+    event.returnValue = getAll()
+})
+
+ipcMain.on(STORE_SEARCH_DOCS, (event, query) => {
+    event.returnValue = search(query)
+})
+
+ipcMain.on(STORE_GET_DOC, (event, docId) => {
+    event.returnValue = getItem(docId)
 })
