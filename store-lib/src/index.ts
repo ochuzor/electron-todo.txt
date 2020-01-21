@@ -8,8 +8,11 @@ import {
     TodoIndexDoc
 } from './data-store';
 
-function textToData(text: string) {
-    return {text};
+function textToData(text: string): TodoIndexDoc {
+    return {
+      id: shortid.generate(),
+      text
+    };
 }
 
 function isString(value: string | TodoIndexDoc): value is string {
@@ -22,7 +25,6 @@ export class FileDataStore implements IDataStore {
     saveText(data: string | TodoIndexDoc): Promise<TodoIndexDoc> {
         return new Promise((resolve) => {
             const _data = isString(data) ? textToData(data) : _.cloneDeep(data);
-            if (!_data.id) _data.id = shortid.generate();
             
             this.indexer.addToIndex(_data);
             this.fileHandler.writeData(this.indexer.toString());

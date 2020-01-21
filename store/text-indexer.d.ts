@@ -1,5 +1,5 @@
 type IndexDoc = {
-    id: string;
+    id: string | number;
     text: string;
 };
 
