@@ -1,27 +1,21 @@
-import {
-    isString, 
-    cloneDeep
-} from 'lodash';
+import { isString, cloneDeep } from 'lodash';
 import shortid from 'shortid';
 
 import { TextIndexer } from './indexer/text-indexer';
-import FileHandler from './file-handler';
-import {
-    IDataStore, 
-    TodoIndexDoc
-} from './data-store';
+import FileStorageHandler from './file-storage-handler';
+import { IDataStore, TodoIndexDoc } from './data-store';
 
 const indexOpts = {
     doc: {
         id: 'id',
-        field: ['text']
-    }
+        field: ['text'],
+    },
 };
 
 function textToData(text: string): TodoIndexDoc {
     return {
-      id: shortid.generate(),
-      text
+        id: shortid.generate(),
+        text,
     };
 }
 
@@ -30,24 +24,27 @@ function isText(value: string | TodoIndexDoc): value is string {
 }
 
 export class FileDataStore implements IDataStore {
-    constructor(private indexer: TextIndexer, private fileHandler: FileHandler) {}
+    constructor(
+        private indexer: TextIndexer,
+        private storageHandler: FileStorageHandler
+    ) {}
 
     static FromFile(file: string): FileDataStore {
         const indexer = new TextIndexer(indexOpts);
-        const fileHandler = new FileHandler(file);
-        if (FileHandler.FileExists(file)) {
-            indexer.initWith(fileHandler.readData());
+        const fileStorageHandler = new FileStorageHandler(file);
+        if (FileStorageHandler.FileExists(file)) {
+            indexer.initWith(fileStorageHandler.readData());
         }
-        
-        return new FileDataStore(indexer, fileHandler);
+
+        return new FileDataStore(indexer, fileStorageHandler);
     }
 
     saveText(data: string | TodoIndexDoc): Promise<TodoIndexDoc> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             const _data = isText(data) ? textToData(data) : cloneDeep(data);
-            
+
             this.indexer.addToIndex(_data);
-            this.fileHandler.writeData(this.indexer.toString());
+            this.storageHandler.writeData(this.indexer.toString());
             resolve(_data);
         });
     }
@@ -55,9 +52,9 @@ export class FileDataStore implements IDataStore {
     deleteDoc(id: string): Promise<string> {
         return new Promise(resolve => {
             this.indexer.removeFromIndex(id);
-            this.fileHandler.writeData(this.indexer.toString());
+            this.storageHandler.writeData(this.indexer.toString());
             resolve(id);
-        })
+        });
     }
 
     getAll(): TodoIndexDoc[] {

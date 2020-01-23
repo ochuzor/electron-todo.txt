@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export default class FileHandler {
+export default class FileStorageHandler {
     constructor(private file: string) {}
 
     static FileExists(file: string) {
@@ -10,7 +10,7 @@ export default class FileHandler {
     writeData(text: string): void {
         fs.writeFileSync(this.file, text, 'utf8');
     }
-  
+
     readData(): string {
         return fs.readFileSync(this.file, 'utf8');
     }
