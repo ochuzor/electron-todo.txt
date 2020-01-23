@@ -17,7 +17,7 @@ const {
     STORE_GET_ALL_DOCS,
     STORE_SEARCH_DOCS,
     STORE_GET_DOC
-} = require('./store/store.constants')
+} = require('../store/store.constants')
 
 const {
     saveText,
@@ -25,7 +25,7 @@ const {
     getAll,
     search,
     getItem
-} = require('./store/index')
+} = require('../store/index')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -46,7 +46,7 @@ function createWindow () {
     })
 
     // and load the index.html of the app.
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile('../main/index.html')
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
@@ -96,7 +96,7 @@ app.on('activate', function () {
 ipcMain.on('show-items-list', (event) => {
     if (!itemListWindow) {
         itemListWindow = new Window({
-            file: path.join(__dirname, 'item-list/index.html'),
+            file: path.join(__dirname, '../item-list/index.html'),
             width: 800,
             height: 600,
             parent: mainWindow

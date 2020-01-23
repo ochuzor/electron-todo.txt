@@ -12,7 +12,7 @@ const $ = require('jquery')
 
 const {
     saveText
-} = require('./store/store.ipc')
+} = require('../store/store.ipc')
 
 const mainForm = document.getElementById('input-bar-form')
 const input = document.getElementById('main-input')

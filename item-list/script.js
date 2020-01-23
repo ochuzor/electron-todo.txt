@@ -12,7 +12,7 @@ const {
     saveText,
     deleteDoc
 } = require('../store/store.ipc');
-const { parseTodoStr } = require('../todo.parser');
+const { parseTodoStr } = require('../lib/js/todo.parser');
 const messageContainer = require('./message-box');
 
 const list = $('#item-list')

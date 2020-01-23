@@ -5,7 +5,7 @@
   "description": "an electron implementation of todo.txt",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron ./core/main.js"
   },
   "keywords": [
     "Electron",
