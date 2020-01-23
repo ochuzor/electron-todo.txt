@@ -33,4 +33,3 @@ export class IpcRendererDataStore implements IDataStore {
         return this.ipcRenderer.sendSync(IpcStoreEvent.GetDoc, id);
     }
 }
-

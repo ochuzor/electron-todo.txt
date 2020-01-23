@@ -4,6 +4,7 @@ type IndexDoc = {
 };
 
 export class TextIndexer {
+    constructor(opts: object);
     initWith(data: string): void;
     getDocument(id: string): IndexDoc;
     getAll(): IndexDoc[];
