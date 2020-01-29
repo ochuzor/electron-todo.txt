@@ -1,20 +1,18 @@
 'use strict';
 
-const { remote } = require('electron');
 const $ = require('jquery');
 const Mousetrap = require('mousetrap');
 const _ = require('lodash');
+const { 
+    remote, 
+    ipcRenderer 
+} = require('electron');
 
-const {
-    getAll,
-    search,
-    getItem,
-    saveText,
-    deleteDoc
-} = require('../store/store.ipc');
 const { parseTodoStr } = require('../lib/js/todo.parser');
 const messageContainer = require('./message-box');
+const { IpcRendererDataStore } = require('../store-lib/dist')
 
+const dataStore = new IpcRendererDataStore(ipcRenderer)
 const list = $('#item-list')
 const searchInput = $('#search-input');
 const itemListCntr = $('#main-cntr > div:first');
@@ -30,12 +28,11 @@ let selectionIndex = -1;
 
 const pageData = Object.create(null);
 pageData.selectedItem = null;
-pageData.allItems = getAll();
 
 function inputChangeHandler(e) {
     const term = searchInput.val()
     if (term && term.trim() !== '') {
-        const items = search(term) || []
+        const items = dataStore.search(term) || []
         displayElemets(items)
     } else {
         displayElemets(pageData.allItems)
@@ -49,7 +46,7 @@ function showItem(item) {
 
 function handleItemClick() {
     const itmId = $(this).attr('data-id');
-    showItem(getItem(itmId));
+    showItem(dataStore.getItem(itmId));
 }
 
 const getListItem = (itm) => {
@@ -123,7 +120,7 @@ function saveEdit() {
         const data = textToData(detailsText.val());
         data.id = pageData.selectedItem.id;
 
-        saveText(data)
+        dataStore.saveText(data)
             .then(() => messageContainer.displayMessage('item saved', DEFAULT_MESSAGE_DISPLAY_TIME))
             .catch(err => messageContainer.displayMessage('Error saving item', err.message));
     }
@@ -132,7 +129,7 @@ function saveEdit() {
 function reloadAll() {
     setTimeout(() => {
         searchInput.val('');
-        pageData.allItems = _.reverse(getAll());
+        pageData.allItems = _.reverse(dataStore.getAll());
         displayElemets(pageData.allItems);
         searchInput.focus();
     }, 300);
@@ -152,10 +149,9 @@ Mousetrap.bind('esc', () => {
 
 Mousetrap.bind('ctrl+del', () => {
     if (pageData.selectedItem) {
-        deleteDoc(pageData.selectedItem.id);
+        dataStore.deleteDoc(pageData.selectedItem.id);
         messageContainer.hide();
         messageContainer.displayConfirm('Delete item?', () => {
-            console.log('item deleted!');
             reloadAll();
             closeItemDetail();
         });

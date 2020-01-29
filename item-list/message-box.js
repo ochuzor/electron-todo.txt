@@ -16,11 +16,11 @@ messageContainer
     .addChild(new UIComponent(CONFIRM_BOX_KEY, '#msg-cntr > div:nth-child(2)'))
     .hide();
 
-messageContainer.displayMessage = (message, forHowLong = 0) => {
+messageContainer.displayMessage = (message, duration = 0) => {
     messageContainer.getChild(MESSAGE_BOX_KEY)
         .setContents(message)
         .show();
-    if (forHowLong > 0) setTimeout(messageContainer.hideMessage, forHowLong);
+    if (duration > 0) setTimeout(messageContainer.hideMessage, duration);
     return messageContainer;
 };
 

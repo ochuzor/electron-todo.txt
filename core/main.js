@@ -18,6 +18,10 @@ const {
     STORE_SEARCH_DOCS,
     STORE_GET_DOC
 } = require('../store/store.constants')
+const { 
+    EventDataStoreServer,
+    FileDataStore
+ } = require('../store-lib/dist')
 
 const {
     saveText,
@@ -26,6 +30,9 @@ const {
     search,
     getItem
 } = require('../store/index')
+
+const DATA_FOLDER = path.join(__dirname, '../data')
+const DATA_FILE = path.join(DATA_FOLDER, 'data.txt')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -111,28 +118,6 @@ ipcMain.on('show-items-list', (event) => {
     }
 })
 
-ipcMain.on(STORE_SAVE_TEXT, (event, textData) => {
-    saveText(textData)
-        .then(respData => {
-            event.returnValue = respData
-        })
-})
-
-ipcMain.on(STORE_DELETE_DOC, (event, id) => {
-    deleteDoc(id)
-        .then(respData => {
-            event.returnValue = respData
-        })
-})
-
-ipcMain.on(STORE_GET_ALL_DOCS, (event) => {
-    event.returnValue = getAll()
-})
-
-ipcMain.on(STORE_SEARCH_DOCS, (event, query) => {
-    event.returnValue = search(query)
-})
-
-ipcMain.on(STORE_GET_DOC, (event, docId) => {
-    event.returnValue = getItem(docId)
-})
+const dataStore = FileDataStore.FromFile(DATA_FILE)
+const dataStoreServer = new EventDataStoreServer(ipcMain, dataStore)
+dataStoreServer.start()

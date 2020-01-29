@@ -10,13 +10,13 @@
 const { ipcRenderer, remote } = require('electron')
 const $ = require('jquery')
 
-const {
-    saveText
-} = require('../store/store.ipc')
+const { IpcRendererDataStore } = require('../store-lib/dist')
 
 const mainForm = document.getElementById('input-bar-form')
 const input = document.getElementById('main-input')
 const ESC_CODE = 27
+
+const dataStore = new IpcRendererDataStore(ipcRenderer)
 
 mainForm.addEventListener('submit', handleText)
 
@@ -27,7 +27,7 @@ function handleText(evt) {
     if (['ls', 'list'].includes(text.toLowerCase())) {
         ipcRenderer.send('show-items-list')
     } else if (text) {
-        saveText(text)
+        dataStore.saveText(text)
     }
 
     setInputText('')
