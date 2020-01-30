@@ -10,26 +10,10 @@ const {
 const path = require('path')
 
 const Window = require('./Window')
-
-const {
-    STORE_SAVE_TEXT,
-    STORE_DELETE_DOC,
-    STORE_GET_ALL_DOCS,
-    STORE_SEARCH_DOCS,
-    STORE_GET_DOC
-} = require('../store/store.constants')
 const { 
     EventDataStoreServer,
     FileDataStore
  } = require('../store-lib/dist')
-
-const {
-    saveText,
-    deleteDoc,
-    getAll,
-    search,
-    getItem
-} = require('../store/index')
 
 const DATA_FOLDER = path.join(__dirname, '../data')
 const DATA_FILE = path.join(DATA_FOLDER, 'data.txt')
