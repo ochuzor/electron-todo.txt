@@ -14,7 +14,7 @@
   "author": "Chinedu Eze",
   "license": "Chinedu Eze",
   "devDependencies": {
-    "electron": "^7.1.7"
+    "electron": "^7.2.4"
   },
   "dependencies": {
     "flexsearch": "^0.6.32",
