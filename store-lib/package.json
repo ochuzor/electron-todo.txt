@@ -31,7 +31,7 @@
   "module": "dist/store-lib.esm.js",
   "devDependencies": {
     "@types/jest": "^24.9.0",
-    "electron": "^7.1.9",
+    "electron": "^18.3.7",
     "husky": "^4.0.10",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
